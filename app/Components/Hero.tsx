@@ -7,7 +7,7 @@ import HangingLantern from "../Components/HangingLantern"
 import WorksMonitor from "../Components/WorksMonitor"
 import type { BulbSceneProps } from "../Components/BulbScene"
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion"
-import styles from "../scss/hero.module.scss"
+import styles from "../Scss/hero.module.scss"
 
 const taglines = [
   "Design that illuminates.",
