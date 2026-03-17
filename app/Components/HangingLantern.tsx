@@ -155,8 +155,9 @@ function Lantern({ lit }: LanternProps) {
                     <meshStandardMaterial color={iron} roughness={0.4} metalness={0.75} />
                 </mesh>
                 {/* bottom drip finial */}
-                <mesh position={[0, -0.44, 0]}>
-                    <coneGeometry args={[0.04, 0.1, 12]} rotation={[Math.PI, 0, 0]} />
+                {/* bottom drip finial */}
+                <mesh position={[0, -0.44, 0]} rotation={[Math.PI, 0, 0]}>
+                    <coneGeometry args={[0.04, 0.1, 12]} />
                     <meshStandardMaterial color={ironLt} roughness={0.3} metalness={0.85} />
                 </mesh>
 
