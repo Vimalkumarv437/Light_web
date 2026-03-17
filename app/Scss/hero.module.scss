@@ -1,0 +1,876 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;700;800&display=swap');
+
+$gold: #ffd54f;
+$amber: #ff8f00;
+$off-white: #f0ebe0;
+$bg: #0b0b0b;
+$dim: #555;
+
+// ─────────────────────────────────────────────────────────
+// SCROLL
+// ─────────────────────────────────────────────────────────
+
+.scrollContainer {
+  position: relative;
+  height: 500vh;
+}
+
+.stickyWrap {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+// ─────────────────────────────────────────────────────────
+// FLOATING BULB
+// ─────────────────────────────────────────────────────────
+
+.floatingBulb {
+  position: absolute;
+  top: 8vh;
+  left: 23%;
+  transform: translate(-50%, 0);
+  width: 340px;
+  height: 460px;
+  z-index: 30;
+  pointer-events: auto;
+  will-change: opacity;
+
+  @media (max-width: 768px) {
+    left: 50%;
+    width: 260px;
+    height: 360px;
+    top: 5vh;
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// HERO
+// ─────────────────────────────────────────────────────────
+
+.hero {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  background: $bg;
+  color: $off-white;
+  font-family: 'Syne', sans-serif;
+  transition: background 1.8s ease;
+  overflow: visible;
+
+  &.lit {
+    background: #0f0d08;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+.lightGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 28% 35%,
+      rgba(255, 200, 80, 0.18) 0%,
+      rgba(255, 140, 20, 0.07) 45%,
+      transparent 75%);
+  opacity: 0;
+  transition: opacity 2s ease;
+  pointer-events: none;
+  z-index: 1;
+
+  @media (max-width: 768px) {
+    background: radial-gradient(ellipse 80% 60% at 50% 30%,
+        rgba(255, 200, 80, 0.16) 0%,
+        transparent 70%);
+  }
+}
+
+.activeLight {
+  opacity: 1;
+}
+
+.leftSide {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  padding: 40px 20px;
+  overflow: visible;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 60px 20px 20px;
+    min-height: 55vh;
+  }
+}
+
+.instruction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.instrArrow {
+  display: block;
+  font-size: 20px;
+  color: rgba(255, 213, 79, 0.5);
+  animation: nudge 1.8s ease-in-out infinite;
+}
+
+.instrText {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #4a4a4a;
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+    letter-spacing: 3px;
+  }
+}
+
+@keyframes nudge {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.canvasWrap {
+  position: relative;
+  width: 340px;
+  height: 460px;
+  overflow: visible;
+  background: transparent;
+
+  @media (max-width: 768px) {
+    width: 260px;
+    height: 360px;
+  }
+}
+
+.logoWrap {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2.4rem, 5.5vw, 5.5rem);
+  letter-spacing: 0.28em;
+  color: $off-white;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 0 80px rgba(255, 213, 79, 0.3);
+}
+
+.logoDivider {
+  margin: 10px auto 0;
+  height: 1px;
+  width: 0;
+  background: linear-gradient(90deg, transparent, $gold, transparent);
+  animation: expandLine 1.4s 1.2s ease forwards;
+}
+
+@keyframes expandLine {
+  to {
+    width: 160px;
+  }
+}
+
+.rightSide {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  padding: 60px clamp(20px, 5vw, 90px);
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.3s;
+
+  &.rightVisible {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 20px 24px 40px;
+    justify-content: center;
+  }
+}
+
+.rightContent {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 420px;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    gap: 14px;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: $gold;
+  border: 1px solid rgba(255, 213, 79, 0.22);
+  padding: 5px 13px;
+  border-radius: 2px;
+  width: fit-content;
+}
+
+.tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+  font-weight: 300;
+  line-height: 1.3;
+  color: $off-white;
+  margin: 0;
+  min-height: 3.2rem;
+}
+
+.description {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #6a6050;
+  margin: 0;
+}
+
+.ctaRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+.ctaPrimary {
+  padding: 12px 24px;
+  background: $gold;
+  color: #1a1200;
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+
+  &:hover {
+    background: #ffe082;
+    transform: translateY(-2px);
+  }
+}
+
+.ctaSecondary {
+  padding: 12px 24px;
+  background: transparent;
+  color: #666;
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border: 1px solid #2a2a2a;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
+
+  &:hover {
+    border-color: #555;
+    color: #ccc;
+    transform: translateY(-2px);
+  }
+}
+
+.stats {
+  display: flex;
+  gap: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #1a1a1a;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statNum {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: $gold;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #444;
+}
+
+.dotGrid {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 65%;
+  height: 100%;
+  background-image: radial-gradient(circle, #222 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: -1;
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent 85%);
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// SHARED
+// ─────────────────────────────────────────────────────────
+
+.brickOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image:
+    repeating-linear-gradient(180deg,
+      transparent, transparent 29px,
+      rgba(255, 200, 100, 0.5) 29px, rgba(255, 200, 100, 0.5) 30px),
+    repeating-linear-gradient(90deg,
+      transparent, transparent 59px,
+      rgba(255, 200, 100, 0.5) 59px, rgba(255, 200, 100, 0.5) 60px);
+}
+
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.labelLine {
+  display: block;
+  width: 34px;
+  height: 1px;
+  background: rgba(255, 213, 79, 0.35);
+  flex-shrink: 0;
+}
+
+.labelText {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255, 213, 79, 0.55);
+}
+
+// ─────────────────────────────────────────────────────────
+// SERVICES
+// ─────────────────────────────────────────────────────────
+
+.services {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  background: #080604;
+  color: $off-white;
+  font-family: 'Syne', sans-serif;
+  overflow: hidden;
+}
+
+.roomCeiling {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: linear-gradient(180deg, #0d0a06 0%, #100e08 100%);
+  z-index: 4;
+  border-bottom: 1px solid rgba(255, 180, 60, 0.06);
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 200, 80, 0.1), transparent);
+  }
+}
+
+.roomFloor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background: linear-gradient(0deg, #0a0804 0%, #100e08 100%);
+  z-index: 4;
+  border-top: 1px solid rgba(255, 180, 60, 0.05);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(90deg,
+        transparent, transparent 119px,
+        rgba(255, 180, 60, 0.025) 119px, rgba(255, 180, 60, 0.025) 120px);
+  }
+}
+
+.floorGlow {
+  position: absolute;
+  bottom: 55px;
+  left: 8%;
+  width: 36%;
+  height: 220px;
+  background: radial-gradient(ellipse at 50% 100%,
+      rgba(255, 200, 80, 0.22) 0%,
+      transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(24px);
+}
+
+.wallGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48%;
+  height: 100%;
+  background: radial-gradient(ellipse 55% 65% at 23% 25%,
+      rgba(255, 175, 55, 0.14) 0%,
+      transparent 65%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.sconceWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 243px;
+  height: 285px;
+  position: relative;
+  bottom: 245px;
+  pointer-events: none;
+  overflow: visible;
+  background: transparent;
+  z-index: 6;
+
+  canvas {
+    background: transparent !important;
+    overflow: visible;
+  }
+
+  @media (max-width: 768px) {
+    width: 160px;
+    height: 180px;
+  }
+}
+
+.roomLeft {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 260px clamp(20px, 4vw, 68px) 90px clamp(20px, 4vw, 68px);
+  // 260px top padding = ceiling(72) + lamp height(220) - overlap
+  position: relative;
+  z-index: 5;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 200px 24px 28px;
+  }
+}
+
+.servicesHeading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(1.9rem, 3.8vw, 3.6rem);
+  line-height: 1.2;
+  color: $off-white;
+  margin: 0 0 18px;
+
+  em {
+    font-style: italic;
+    color: rgba(255, 213, 79, 0.82);
+  }
+}
+
+.servicesSubtext {
+  font-size: 13px;
+  line-height: 1.9;
+  color: #6a5a40;
+  margin: 0;
+}
+
+.roomRight {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  padding: 90px clamp(16px, 3vw, 48px) 110px clamp(10px, 2vw, 24px);
+  position: relative;
+  z-index: 5;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 20px 16px 40px;
+  }
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+.serviceCard {
+  background: rgba(255, 255, 255, 0.022);
+  border: 1px solid rgba(255, 200, 80, 0.07);
+  padding: 20px;
+  cursor: pointer;
+  transition: background 0.28s, border-color 0.28s;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 200, 80, 0.22), transparent);
+    opacity: 0;
+    transition: opacity 0.28s;
+  }
+
+  &:hover {
+    background: rgba(255, 200, 80, 0.038);
+    border-color: rgba(255, 200, 80, 0.16);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.cardIcon {
+  font-size: 1.2rem;
+  color: rgba(255, 213, 79, 0.55);
+  line-height: 1;
+}
+
+.cardTag {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #2e2e2e;
+  font-family: 'Syne', sans-serif;
+}
+
+.cardTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 1rem;
+  color: $off-white;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.cardDesc {
+  font-size: 11px;
+  line-height: 1.75;
+  color: #6a5a40;
+  margin: 0;
+}
+
+.cardFooter {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cardArrow {
+  font-size: 13px;
+  color: rgba(255, 213, 79, 0.28);
+  transition: color 0.2s, transform 0.2s;
+
+  .serviceCard:hover & {
+    color: rgba(255, 213, 79, 0.65);
+    transform: translateX(4px);
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// WORKS
+// ─────────────────────────────────────────────────────────
+
+.works {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  background: #070604;
+  color: $off-white;
+  font-family: 'Syne', sans-serif;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.worksCeiling {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: linear-gradient(180deg, #0a0806 0%, #0d0b07 100%);
+  z-index: 4;
+  border-bottom: 1px solid rgba(255, 180, 60, 0.04);
+}
+
+.worksFloor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 110px;
+  background: linear-gradient(0deg, #060402 0%, #0d0b07 100%);
+  z-index: 4;
+  border-top: 1px solid rgba(255, 160, 40, 0.04);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 180, 60, 0.08), transparent);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(90deg,
+        transparent, transparent 159px,
+        rgba(255, 160, 40, 0.02) 159px, rgba(255, 160, 40, 0.02) 160px);
+  }
+}
+
+.deskGlow {
+  position: absolute;
+  bottom: 80px;
+  right: 2%;
+  width: 44%;
+  height: 220px;
+  background: radial-gradient(ellipse at 70% 100%,
+      rgba(255, 200, 80, 0.2) 0%,
+      transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(24px);
+}
+
+.worksWallGlow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 52%;
+  height: 100%;
+  background: radial-gradient(ellipse 55% 60% at 88% 35%,
+      rgba(255, 175, 55, 0.1) 0%,
+      transparent 65%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.worksLeft {
+  width: 36%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 90px clamp(28px, 4vw, 72px) 140px;
+  position: relative;
+  z-index: 5;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 90px 24px 28px;
+  }
+}
+
+.worksHeading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  line-height: 1.15;
+  color: $off-white;
+  margin: 0 0 18px;
+
+  em {
+    font-style: italic;
+    color: rgba(255, 213, 79, 0.85);
+  }
+}
+
+.worksSubtext {
+  font-size: 13px;
+  line-height: 1.95;
+  color: #6a5a40;
+  margin: 0 0 28px;
+}
+
+.worksBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 26px;
+  background: transparent;
+  color: rgba(255, 213, 79, 0.75);
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 213, 79, 0.18);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  width: fit-content;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 213, 79, 0.04);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  &:hover {
+    border-color: rgba(255, 213, 79, 0.45);
+    color: $gold;
+    transform: translateY(-2px);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.worksRight {
+  width: 64%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 72px 16px 110px 16px;
+  position: relative; // needed for absolute lantern
+  z-index: 5;
+  gap: 0;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 16px 16px 120px;
+    justify-content: center;
+  }
+}
+
+.monitorWrap {
+  flex: 1;
+  max-width: 500px;
+  min-width: 0;
+  align-self: flex-end;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+}
+
+.lanternWrap {
+  position: absolute;
+  top: 72px;
+  right: 0;
+  width: 160px;
+  height: 180px;
+  z-index: 8;
+  overflow: visible;
+  background: transparent;
+  pointer-events: none;
+
+  canvas {
+    background: transparent !important;
+    overflow: visible;
+  }
+
+  @media (max-width: 768px) {
+    width: 110px;
+    height: 130px;
+    right: 0;
+  }
+}
