@@ -66,10 +66,9 @@ export default function Hero() {
   const hangingBulbOpacity = useTransform(smoothProgress, [0, 0.20], [1, 0])
 
   // ── Services ──
-  // Services + sconce now fade in together at the same time
   const servicesOpacity = useTransform(smoothProgress, [0.20, 0.42], [0, 1])
-  const sconceOpacity = useTransform(smoothProgress, [0.20, 0.42], [0, 1]) // same as section
-  const sconceX = useTransform(smoothProgress, [0.20, 0.40], [-40, 0]) // slides in with content
+  const sconceOpacity = useTransform(smoothProgress, [0.20, 0.42], [0, 1])
+  const sconceX = useTransform(smoothProgress, [0.20, 0.40], [-40, 0])
   const roomGlowOpacity = useTransform(smoothProgress, [0.35, 0.55], [0, 1])
   const servicesFadeOut = useTransform(smoothProgress, [0.62, 0.74], [1, 0])
 
@@ -198,13 +197,14 @@ export default function Hero() {
               position: "absolute",
               inset: 0,
               display: "flex",
+              overflow: "visible",
             }}
           >
             <div className={styles.roomCeiling} />
             <div className={styles.roomFloor} />
             <div className={styles.brickOverlay} aria-hidden />
 
-            {/* Sconce — absolute top-left of services */}
+            {/* Sconce — absolute top-left */}
             <motion.div
               className={styles.sconceWrap}
               style={{ opacity: sconceOpacity, x: sconceX }}
@@ -215,7 +215,7 @@ export default function Hero() {
             <motion.div className={styles.floorGlow} style={{ opacity: roomGlowOpacity }} />
             <motion.div className={styles.wallGlow} style={{ opacity: roomGlowOpacity }} />
 
-            {/* Left — text only, no lamp inside */}
+            {/* Left */}
             <div className={styles.roomLeft}>
               <motion.div
                 className={styles.sectionLabel}
@@ -348,7 +348,7 @@ export default function Hero() {
             </motion.button>
           </div>
 
-          {/* Right — monitor only */}
+          {/* Right — monitor */}
           <div className={styles.worksRight}>
             <motion.div
               className={styles.monitorWrap}
